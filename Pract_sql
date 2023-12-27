@@ -1,0 +1,16 @@
+SELECT vt.Articulo,
+       vt.VrUnitario,
+       vt.Cantidad,
+       vt.VrTotal,
+       ct.CtasPag,
+       ct.AbonoCI,
+       ct.VrPago,
+       art.Descripcion,
+       tp.Nombre,
+       LEFT(vt.Cuenta,2) AS Zona
+FROM VLIDA.dbo.detaventas AS vt
+JOIN VLIDA.dbo.articulos AS art ON vt.Articulo = art.Codigo
+JOIN VLIDA.dbo.tipoarticulos AS tp ON art.Tipo = tp.Codigo
+JOIN VLIDA.dbo.histcartera AS ct ON ct.Cuenta = vt.Cuenta
+WHERE CONVERT(int, LEFT(vt.Cuenta,2)) <= 4 
+

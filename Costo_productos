@@ -1,0 +1,11 @@
+SELECT CONVERT(DATE, MAX(Fecha)) AS Ult_Fecha_compra,
+       MAX(Ent.Numero) AS Ult_Numero,
+       Articulo,
+       Referencia,
+       VrUnitario
+FROM VLIDA.dbo.InvtEntradas as Ent
+JOIN VLIDA.dbo.InvtEntradas_Det as det ON
+det.Numero = Ent.Numero
+WHERE Ent.Tipo_Doc <> 1
+GROUP BY Articulo, Referencia, VrUnitario, Ent.Fecha, Ent.Tipo_Doc
+ORDER BY Articulo, Referencia, Ult_Numero;

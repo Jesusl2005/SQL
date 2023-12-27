@@ -1,0 +1,15 @@
+SELECT vent.Zona AS Zona,
+       vent.Cuenta AS Cuenta,
+       vent.Cliente AS Cedula,
+       Clientes.Nombres AS Nombre,
+       CONVERT(DATE,vent.Fecha) AS Fecha,
+       vent.VrTotal AS 'Valor venta',
+       vent.VrCta AS 'Valor cuota'
+FROM ELECTROV.dbo.ventas AS vent
+JOIN ELECTROV.dbo.detaventas AS det
+ON det.Cuenta = vent.Cuenta
+JOIN ELECTROV.dbo.personas AS Clientes
+ON Clientes.Cedula = vent.Cliente
+WHERE vent.CtaInic-vent.AbonoCI != 0 AND vent.VrCta != 0
+AND YEAR(vent.Fecha) >= 2022
+ORDER BY vent.Fecha;

@@ -1,0 +1,24 @@
+SELECT ventas.Zona,
+       ventas.Cuenta,
+       p.Nombres,
+       Salida.Cliente,
+       CONVERT(date, Salida.Fecha) AS Fecha,
+       det.Articulo,
+       det.Referencia,
+       CONVERT(int,det.Valor) AS VrUnitario,
+       det.Cantidad AS Cant,
+       Salida.Numero
+       
+FROM ELECTROV.dbo.InvtSalidas AS Salida
+JOIN ELECTROV.dbo.personas AS p ON
+Salida.Cliente = p.Cedula
+JOIN ELECTROV.dbo.Ventas AS ventas ON
+ventas.OSNo = Salida.Numero
+JOIN ELECTROV.dbo.InvtSalidas_Det AS det ON
+det.Numero = Salida.Numero
+WHERE Salida.Fecha BETWEEN '01-07-2023' AND '31-07-2023'
+AND det.Valor <> 0
+AND Salida.Estado = 0
+AND Salida.Cliente != '50847935-9'
+AND ventas.Zona != 12
+ORDER BY Salida.Fecha ASC;
